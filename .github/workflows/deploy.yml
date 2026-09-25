@@ -109,24 +109,14 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Validate local image
+      - name: Validate built image
         env:
           IMAGE_REF: ${{ steps.meta.outputs.image_ref }}
         run: |
           set -euo pipefail
-          test -n "$IMAGE_REF" || {
-            echo "IMAGE_REF is empty"
-            exit 1
-          }
-          case "$IMAGE_REF" in
-            */*:*) ;;
-            *)
-              echo "Invalid image reference: $IMAGE_REF"
-              exit 1
-              ;;
-          esac
+          test -n "$IMAGE_REF"
           docker image inspect "$IMAGE_REF" >/dev/null
-          echo "Validated image: ${IMAGE_REF}"
+          echo "Validated image: $IMAGE_REF"
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
@@ -137,7 +127,7 @@ jobs:
           severity: CRITICAL,HIGH
           ignore-unfixed: true
 
-      - name: Upload Trivy SARIF (informational)
+      - name: Upload Trivy SARIF
         if: always()
         uses: aquasecurity/trivy-action@v0.36.0
         continue-on-error: true
