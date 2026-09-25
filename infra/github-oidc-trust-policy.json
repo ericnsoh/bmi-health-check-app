@@ -13,8 +13,8 @@
         },
         "StringLike": {
           "token.actions.githubusercontent.com:sub": [
-            "repo:excelcloud-devteam-eric/bmi-health-check-app:*",
-            "repo:excelcloud-devteam-eric@*/bmi-health-check-app@*:*"
+            "repo:ericnsoh/bmi-health-check-app:*",
+            "repo:ericnsoh@*/bmi-health-check-app@*:*"
           ]
         }
       }
