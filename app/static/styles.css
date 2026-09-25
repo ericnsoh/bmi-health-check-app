@@ -62,9 +62,11 @@ body {
 .logo {
   display: block;
   width: clamp(240px, 42vw, 340px);
+  aspect-ratio: 968 / 272;
   height: auto;
   margin-bottom: 1.5rem;
   border-radius: 14px;
+  object-fit: cover;
   box-shadow: 0 14px 34px rgba(14, 26, 40, 0.28);
 }
 
