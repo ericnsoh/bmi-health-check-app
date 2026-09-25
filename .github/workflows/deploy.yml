@@ -114,14 +114,19 @@ jobs:
           IMAGE_REF: ${{ steps.meta.outputs.image_ref }}
         run: |
           set -euo pipefail
-          test -n "$IMAGE_REF"
+          test -n "${IMAGE_REF}" || {
+            echo "IMAGE_REF is empty"
+            exit 1
+          }
           docker image inspect "$IMAGE_REF" >/dev/null
-          echo "Validated image: $IMAGE_REF"
+          echo "Validated image: ${IMAGE_REF}"
 
       - name: Scan image with Trivy
+        env:
+          IMAGE_REF: ${{ steps.meta.outputs.image_ref }}
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ${{ steps.meta.outputs.image_ref }}
+          image-ref: ${{ env.IMAGE_REF }}
           format: table
           exit-code: "1"
           severity: CRITICAL,HIGH
@@ -131,8 +136,10 @@ jobs:
         if: always()
         uses: aquasecurity/trivy-action@v0.36.0
         continue-on-error: true
+        env:
+          IMAGE_REF: ${{ steps.meta.outputs.image_ref }}
         with:
-          image-ref: ${{ steps.meta.outputs.image_ref }}
+          image-ref: ${{ env.IMAGE_REF }}
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH,MEDIUM
