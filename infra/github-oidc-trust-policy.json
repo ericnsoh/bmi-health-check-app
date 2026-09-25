@@ -12,7 +12,7 @@
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
         },
         "StringLike": {
-          "token.actions.githubusercontent.com:sub": "repo:ericnsoh/bmi-health-check-app:ref:refs/heads/main"
+          "token.actions.githubusercontent.com:sub": "repo:ericnsoh@134097922/bmi-health-check-app@1386508630:ref:refs/heads/main"
         }
       }
     }
