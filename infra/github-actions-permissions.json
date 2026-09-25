@@ -41,7 +41,7 @@
         "ecr:TagResource",
         "ecr:ListTagsForResource"
       ],
-      "Resource": "arn:aws:ecr:us-east-1:124666675812:repository/bmi-health-check"
+      "Resource": "arn:aws:ecr:us-east-1:124666675812:repository/bmi-health-check-app"
     },
     {
       "Sid": "LambdaDeploy",
