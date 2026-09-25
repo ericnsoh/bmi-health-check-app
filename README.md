@@ -45,7 +45,7 @@ Pipeline:
 
 | Secret | Value |
 | --- | --- |
-| `AWS_IAM_ROLE_ARN` | `arn:aws:iam::319029038820:role/github-actions-bmi-health-check` |
+| `AWS_IAM_ROLE_ARN` | `arn:aws:iam::124666675812:role/github-actions-bmi-health-check` |
 
 OIDC trust must allow GitHub’s `repo:org@id/repo@id:...` subject format (already configured).
 
