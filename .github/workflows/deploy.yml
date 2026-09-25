@@ -92,6 +92,7 @@ jobs:
           echo "image_ref=${IMAGE_REF}" >> "$GITHUB_OUTPUT"
           echo "IMAGE_URI=${IMAGE_URI}" >> "$GITHUB_ENV"
           echo "IMAGE_REF=${IMAGE_REF}" >> "$GITHUB_ENV"
+          echo "Using image: ${IMAGE_REF}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -107,6 +108,25 @@ jobs:
             ${{ steps.meta.outputs.image_uri }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Validate local image
+        env:
+          IMAGE_REF: ${{ steps.meta.outputs.image_ref }}
+        run: |
+          set -euo pipefail
+          test -n "$IMAGE_REF" || {
+            echo "IMAGE_REF is empty"
+            exit 1
+          }
+          case "$IMAGE_REF" in
+            */*:*) ;;
+            *)
+              echo "Invalid image reference: $IMAGE_REF"
+              exit 1
+              ;;
+          esac
+          docker image inspect "$IMAGE_REF" >/dev/null
+          echo "Validated image: ${IMAGE_REF}"
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
